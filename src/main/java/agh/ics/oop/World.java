@@ -2,22 +2,14 @@ package agh.ics.oop;
 
 public class World {
     public static void main(String[] args){
-        System.out.println("System wystartował");
-        Direction[] dirArray = conv(args);
-        run(dirArray);
-        System.out.println("System zakończył działanie");
-
-        MapDirection md = MapDirection.NORTH;
-        System.out.println(md.toString());
-        System.out.println(md.next());
-        System.out.println(md.previous());
-        System.out.println(md.toUnitVector());
-
-        Vector2d position1 = new Vector2d(1,2);
-        System.out.println(position1);
-        Vector2d position2 = new Vector2d(-2,1);
-        System.out.println(position2);
-        System.out.println(position1.add(position2));
+        Animal animal = new Animal();
+        System.out.println(animal.toString());
+        OptionsParser parser = new OptionsParser();
+        MoveDirection[] md = parser.parse(args);
+        for(MoveDirection move : md){
+            animal.move(move);
+        }
+        System.out.println(animal.toString());
     }
     public static Direction[] conv(String[] moves) {
         Direction[] d = new Direction[moves.length];

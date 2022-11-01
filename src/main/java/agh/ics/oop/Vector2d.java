@@ -34,7 +34,7 @@ public class Vector2d {
         return false;
     }
     public Vector2d add (Vector2d other){
-        if(this.x != null && this.y != null && other.x != null && other.y != null){
+        if(other != null && this.x != null && this.y != null && other.x != null && other.y != null){
             return new Vector2d(other.x+this.x, other.y+this.y);
         }
         System.out.println("Invalid x and/or y!");
