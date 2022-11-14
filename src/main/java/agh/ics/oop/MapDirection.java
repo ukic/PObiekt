@@ -1,7 +1,10 @@
 package agh.ics.oop;
 
 public enum MapDirection {
-    NORTH, SOUTH, WEST, EAST;
+    NORTH,
+    SOUTH,
+    WEST,
+    EAST;
     @Override
     public String toString(){
         switch(this){
@@ -19,6 +22,25 @@ public enum MapDirection {
             }
             default -> {
                 return "Invalid direction";
+            }
+        }
+    }
+    public String toSymbol(){
+        switch(this){
+            case EAST -> {
+                return "E";
+            }
+            case WEST -> {
+                return "W";
+            }
+            case NORTH -> {
+                return "N";
+            }
+            case SOUTH -> {
+                return "S";
+            }
+            default -> {
+                return "Invalid";
             }
         }
     }

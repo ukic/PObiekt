@@ -3,10 +3,23 @@ package agh.ics.oop;
 public class Animal {
     private Vector2d currentPosition = new Vector2d(2,2);
     private MapDirection currentDirection = MapDirection.NORTH;
+    private IWorldMap map;
+    public Animal(){}
+    public Animal(IWorldMap map){
+        this.map = map;
+    }
+    public Animal(IWorldMap map, Vector2d initialPosition){
+        this.map = map;
+        if (map.canMoveTo(initialPosition)) {
+            currentPosition = initialPosition;
+        }
+    }
     @Override
     public String toString(){
-        return "The animal's is looking in the " + currentDirection.toString() + " direction and is on position "
-                + currentPosition.toString();
+        return currentDirection.toSymbol();
+    }
+    public Vector2d getPosition(){
+        return currentPosition;
     }
 
     public boolean isAt(Vector2d position){
@@ -20,22 +33,16 @@ public class Animal {
         return currentDirection;
     }
     public void move(MoveDirection direction){
+        Vector2d vec = null;
         if (direction != null && currentDirection != null) {
-            Vector2d vec;
-            if (direction.equals(MoveDirection.RIGHT)) {
-                currentDirection = currentDirection.next();
-            } else if (direction.equals(MoveDirection.LEFT)) {
-                currentDirection = currentDirection.previous();
-            } else if (direction.equals(MoveDirection.FORWARD)) {
-                vec = currentPosition.add(currentDirection.toUnitVector());
-                if (vec != null && vec.follows(new Vector2d(0, 0)) && vec.precedes(new Vector2d(4, 4))) {
-                    currentPosition = vec;
-                }
-            } else if (direction.equals(MoveDirection.BACKWARD)) {
-                vec = currentPosition.add(currentDirection.toUnitVector().opposite());
-                if (vec != null && vec.follows(new Vector2d(0, 0)) && vec.precedes(new Vector2d(4, 4))) {
-                    currentPosition = vec;
-                }
+            switch(direction){
+                case LEFT -> currentDirection = currentDirection.previous();
+                case RIGHT -> currentDirection = currentDirection.next();
+                case FORWARD -> vec = currentPosition.add(currentDirection.toUnitVector());
+                case BACKWARD -> vec = currentPosition.subtract(currentDirection.toUnitVector());
+            }
+            if(direction.ordinal() < 2 && map.canMoveTo(vec)) {
+                currentPosition = vec;
             }
         }
     }
