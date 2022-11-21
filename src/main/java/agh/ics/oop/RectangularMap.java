@@ -5,11 +5,9 @@ import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
 
-public class RectangularMap implements IWorldMap{
-    public Integer width;
-    public Integer height;
-    public final List<Animal> animals = new ArrayList<>();
-    private final MapVisualizer mapVisualizer = new MapVisualizer(this);
+public class RectangularMap extends AbstractWorldMap{
+    private final Integer width;
+    private final Integer height;
 
     public RectangularMap(Integer width, Integer height) {
         this.width = width;
@@ -22,40 +20,14 @@ public class RectangularMap implements IWorldMap{
         return false;
     }
     @Override
-    public boolean isOccupied(Vector2d position) {
-        for(Animal an : animals){
-            if (an.isAt(position)){
-                return true;
-            }
-        }
-        return false;
-    }
-    @Override
     public boolean canMoveTo(Vector2d position) {
-        return isPositionOnMap(position) && !isOccupied(position);
-    }
-    @Override
-    public boolean place(Animal animal) {
-        if(animals.contains(animal)){
-            return true;
-        }
-        if(canMoveTo(animal.getPosition())) {
-            animals.add(animal);
-            return true;
-        }
-        return false;
-    }
-    @Override
-    public Object objectAt(Vector2d position) {
-        for(Animal an : animals){
-            if (an.isAt(position)){
-                return an;
-            }
-        }
-        return null;
+        if(position == null){return false;}
+        return isPositionOnMap(position) && super.canMoveTo(position);
     }
     @Override
     public String toString(){
-        return mapVisualizer.draw(new Vector2d(0,0), new Vector2d(width, height));
+        lowerLeft = new Vector2d(0,0);
+        upperRight = new Vector2d(width, height);
+        return super.toString();
     }
 }
