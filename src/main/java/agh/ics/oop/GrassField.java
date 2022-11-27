@@ -11,7 +11,10 @@ public class GrassField extends AbstractWorldMap {
     public GrassField(int n){
         max = (int) Math.sqrt(10*n);
         for(int i=0; i < n; i++){
-            elements.add(new Grass(genNewPlace()));
+            Vector2d v = genNewPlace();
+            Grass g = new Grass(v);
+            elements.put(v, g);
+            g.addObserver(this);
         }
     }
     private void setMapCoordinates(Vector2d vec){
@@ -39,12 +42,13 @@ public class GrassField extends AbstractWorldMap {
     }
     public boolean canMoveTo(Vector2d position){
         if(position == null){
-            return false;
+            throw new IllegalArgumentException("Argument position cannot be null");
         }
         if(isOccupied(position)){
             Object el = objectAt(position);
-            if(el instanceof Grass){
-                ((Grass) el).setPosition(genNewPlace());
+            if(el instanceof Grass g){
+                Vector2d v = genNewPlace();
+                g.positionChanged(v);
             }
             else{
                 return false;
@@ -53,7 +57,6 @@ public class GrassField extends AbstractWorldMap {
         setMapCoordinates(position);
         return true;
     }
-
     @Override
     public String toString(){
         lowerLeft = new Vector2d(lowX, lowY);

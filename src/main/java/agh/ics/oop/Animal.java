@@ -2,19 +2,23 @@ package agh.ics.oop;
 
 public class Animal extends AbstractWorldElement{
     private MapDirection currentDirection = MapDirection.NORTH;
-    private IWorldMap map;
-    public Animal(){}
+    private final IWorldMap map;
     public Animal(IWorldMap map){
         super();
+        if (map==null){
+            throw new IllegalArgumentException("Invalid argument for Object Animal");
+        }
         this.map = map;
         setPosition(new Vector2d(2,2));
     }
     public Animal(IWorldMap map, Vector2d initialPosition){
+        super();
         if(initialPosition != null){
             this.map = map;
-            if (map.canMoveTo(initialPosition)) {
-                setPosition(initialPosition);
-            }
+            setPosition(initialPosition);
+        }
+        else{
+            throw new IllegalArgumentException("Invalid argument for Object Animal");
         }
     }
     @Override
@@ -26,21 +30,15 @@ public class Animal extends AbstractWorldElement{
         return currentDirection;
     }
     public void move(MoveDirection direction) {
-        try {
-            Vector2d vec = null;
-            switch (direction) {
-                case LEFT -> currentDirection = currentDirection.previous();
-                case RIGHT -> currentDirection = currentDirection.next();
-                case FORWARD -> vec = getPosition().add(currentDirection.toUnitVector());
-                case BACKWARD -> vec = getPosition().subtract(currentDirection.toUnitVector());
-            }
-            if (direction.ordinal() < 2 && map.canMoveTo(vec)) {
-                setPosition(vec);
-            }
+        Vector2d vec = null;
+        switch (direction) {
+            case LEFT -> currentDirection = currentDirection.previous();
+            case RIGHT -> currentDirection = currentDirection.next();
+            case FORWARD -> vec = getPosition().add(currentDirection.toUnitVector());
+            case BACKWARD -> vec = getPosition().subtract(currentDirection.toUnitVector());
         }
-        catch (NullPointerException n){
-            throw new NullPointerException("Argument is null");
+        if (direction.ordinal() < 2 && map.canMoveTo(vec)) {
+            positionChanged(vec);
         }
-
     }
 }

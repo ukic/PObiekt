@@ -1,57 +1,43 @@
 package agh.ics.oop;
 
-import javax.swing.event.MenuKeyListener;
-import java.lang.annotation.ElementType;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashMap;
+import java.util.Map;
 
-abstract class AbstractWorldMap implements IWorldMap {
-    protected List<AbstractWorldElement> elements = new ArrayList<>();
+abstract class AbstractWorldMap implements IWorldMap, IPositionChangeObserver {
+    protected Map<Vector2d, AbstractWorldElement> elements = new HashMap<>();
     protected Vector2d lowerLeft = new Vector2d(0,0);
     protected Vector2d upperRight = new Vector2d(0,0);
     private final MapVisualizer mapVisualizer = new MapVisualizer(this);
     public boolean canMoveTo(Vector2d position) {
-        if (position == null){
-            return false;
-        }
+        if(position == null){throw new IllegalArgumentException("New position cannot be null");}
         return !isOccupied(position);
     }
     public boolean place(Animal animal){
         if(animal == null){
-            return false;
+            throw new IllegalArgumentException("An animal cannot be null!");
         }
-        if(elements.contains(animal)){
-            return false;
-        }
-        if(animal.getPosition() != null && canMoveTo(animal.getPosition())){
-            elements.add(animal);
+        if(canMoveTo(animal.getPosition())){
+            elements.put(animal.getPosition(), animal);
+            animal.addObserver(this);
             return true;
         }
         return false;
     }
     public boolean isOccupied(Vector2d position){
-        if(position == null){
-            return false;
-        }
-        for(AbstractWorldElement a: elements){
-            if(a.isAt(position)){
-                return true;
-            }
-        }
-        return false;
+        return elements.containsKey(position);
     }
     public Object objectAt(Vector2d position){
-        if(position == null || position.x == null || position.y == null){
-            return null;
-        }
-        for(AbstractWorldElement a: elements){
-            if(a.isAt(position)){
-                return a;
-            }
+        if(elements.containsKey(position)){
+            return elements.get(position);
         }
         return null;
     }
     public String toString(){
         return mapVisualizer.draw(lowerLeft, upperRight);
+    }
+    public void positionChanged(Vector2d oldPosition, Vector2d newPosition){
+        AbstractWorldElement el = elements.get(oldPosition);
+        elements.remove(oldPosition);
+        elements.put(newPosition, el);
     }
 }

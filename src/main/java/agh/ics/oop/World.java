@@ -1,8 +1,5 @@
 package agh.ics.oop;
 
-import javax.swing.*;
-import java.awt.*;
-
 public class World {
     public static void main(String[] args){
         MoveDirection[] directions = new OptionsParser().parse(args);
