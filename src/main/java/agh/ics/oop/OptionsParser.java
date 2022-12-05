@@ -18,8 +18,8 @@ public class OptionsParser {
             case "r", "right" -> {
                 return MoveDirection.RIGHT;
             }
+            default -> throw new IllegalArgumentException(str + " is not legal move specification");
         }
-        return null;
     }
 
     public MoveDirection[] parse(String[] str){

@@ -7,18 +7,13 @@ public class RectangularMap extends AbstractWorldMap{
     public RectangularMap(Integer width, Integer height) {
         this.width = width;
         this.height = height;
+        mapBoundary = new MapBoundary();
     }
     private boolean isPositionOnMap(Vector2d position){
-        return position.x > -1 && position.x <= width && position.y > -1 && position.y <= height ;
+        return position.getX() > -1 && position.getX()<= width && position.getY() > -1 && position.getY() <= height ;
     }
     @Override
     public boolean canMoveTo(Vector2d position) {
         return super.canMoveTo(position) && isPositionOnMap(position);
-    }
-    @Override
-    public String toString(){
-        lowerLeft = new Vector2d(0,0);
-        upperRight = new Vector2d(width, height);
-        return super.toString();
     }
 }

@@ -3,8 +3,8 @@ package agh.ics.oop;
 import java.util.Objects;
 
 public class Vector2d {
-    public Integer x;
-    public Integer y;
+    private final Integer x;
+    private final Integer y;
     public Vector2d(Integer x, Integer y){
         if (x != null && y != null){
             this.x = x;
@@ -13,6 +13,12 @@ public class Vector2d {
         else{
             throw new IllegalArgumentException("Invalid argument for Object Vector2d");
         }
+    }
+    public Integer getX(){
+        return x;
+    }
+    public Integer getY(){
+        return y;
     }
     @Override
     public int hashCode() {

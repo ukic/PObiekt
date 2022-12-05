@@ -3,14 +3,14 @@ package agh.ics.oop;
 import java.util.ArrayList;
 import java.util.List;
 
-abstract class AbstractWorldElement implements IMapElement {
+public abstract class AbstractWorldElement implements IMapElement {
     private Vector2d position;
     private final List<IPositionChangeObserver> observers = new ArrayList<>();
     public Vector2d getPosition(){
         return position;
     }
     public void setPosition(Vector2d position){
-        this.position=position;
+        this.position = position;
     }
     public boolean isAt(Vector2d position){
         return this.position.equals(position);

@@ -9,16 +9,14 @@ public class GrassFieldTest {
     private final GrassField map = new GrassField(10);
     @Test
     public void testPlace(){
-        assertFalse(map.place(new Animal(map, null)));
+        assertThrows(IllegalArgumentException.class, () -> map.place(new Animal(map, null)));
         assertTrue(map.place(new Animal(map)));
         assertTrue(map.place(new Animal(map, new Vector2d(-1,-1))));
         assertFalse(map.place(new Animal(map, new Vector2d(-1, -1))));
-
     }
     @Test
     public void testIsOccupied(){
         assertFalse(map.isOccupied(null));
-        assertFalse(map.isOccupied(new Vector2d(null, 1)));
         map.place(new Animal(map, new Vector2d(1000, 1000)));
         assertTrue(map.isOccupied(new Vector2d(1000, 1000)));
         assertFalse(map.isOccupied(new Vector2d(-1, -1)));
@@ -28,8 +26,7 @@ public class GrassFieldTest {
         map.place(new Animal(map, new Vector2d(1, 1)));
         assertTrue(map.canMoveTo(new Vector2d(-1000, 1000)));
         assertFalse(map.canMoveTo(new Vector2d(1, 1)));
-        assertFalse(map.canMoveTo(null));
-        assertFalse(map.isOccupied(new Vector2d(1, null)));
+        assertThrows(IllegalArgumentException.class, () -> map.canMoveTo(null));
         assertTrue(map.canMoveTo(new Vector2d(0, 1)));
     }
     @Test
@@ -40,6 +37,5 @@ public class GrassFieldTest {
         assertNull(map.objectAt(new Vector2d(0, 1)));
         assertNull(map.objectAt(new Vector2d(-1, -1)));
         assertNull(map.objectAt(null));
-        assertNull(map.objectAt(new Vector2d(null, null)));
     }
 }

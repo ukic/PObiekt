@@ -13,19 +13,18 @@ public class Animal extends AbstractWorldElement{
     }
     public Animal(IWorldMap map, Vector2d initialPosition){
         super();
-        if(initialPosition != null){
-            this.map = map;
-            setPosition(initialPosition);
+        if(map == null || initialPosition == null){
+            throw new IllegalArgumentException("Invalid argument for Object Animal");
         }
         else{
-            throw new IllegalArgumentException("Invalid argument for Object Animal");
+            this.map = map;
+            setPosition(initialPosition);
         }
     }
     @Override
     public String toString(){
         return currentDirection.toSymbol();
     }
-
     public MapDirection getDirection(){
         return currentDirection;
     }

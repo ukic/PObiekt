@@ -4,19 +4,20 @@ import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
 public class AnimalTest {
+    IWorldMap map = new RectangularMap(5,5);
     @Test
     public void testIsAt() {
-        assertTrue(new Animal().isAt(new Vector2d(2, 2)));
-        assertFalse(new Animal().isAt(new Vector2d(-2, -2)));
-        assertFalse(new Animal().isAt(new Vector2d(-1757439, 1757439)));
-        assertFalse(new Animal().isAt(new Vector2d(-2, null)));
-        assertFalse(new Animal().isAt(new Vector2d(null, -2)));
-        assertFalse(new Animal().isAt(new Vector2d(null, null)));
-        assertFalse(new Animal().isAt(null));
+        assertTrue(new Animal(map).isAt(new Vector2d(2, 2)));
+        assertFalse(new Animal(map).isAt(new Vector2d(-2, -2)));
+        assertFalse(new Animal(map).isAt(new Vector2d(-1757439, 1757439)));
+        assertFalse(new Animal(map).isAt(new Vector2d(-2, null)));
+        assertFalse(new Animal(map).isAt(new Vector2d(null, -2)));
+        assertFalse(new Animal(map).isAt(new Vector2d(null, null)));
+        assertFalse(new Animal(map).isAt(null));
     }
     @Test
     public void testMove() {
-        Animal a = new Animal();
+        Animal a = new Animal(map);
         assertEquals(MapDirection.NORTH, a.getDirection());
 
         a.move(MoveDirection.FORWARD);
