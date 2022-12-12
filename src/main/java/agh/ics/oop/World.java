@@ -3,14 +3,14 @@ package agh.ics.oop;
 import agh.ics.oop.gui.App;
 import javafx.application.Application;
 
+import java.util.Arrays;
+
 public class World {
     public static void main(String[] args){
         try {
-            /*MoveDirection[] directions = new OptionsParser().parse(args);
-            //IWorldMap map = new RectangularMap(10, 5);
-            IWorldMap map = new GrassField(10);
-            Vector2d[] positions = {new Vector2d(0, 0), new Vector2d(3,4)};
-            IEngine engine = new SimulationEngine(map, directions, positions);
+            /*IWorldMap map = new GrassField(10);
+            SimulationEngine engine = new SimulationEngine(map, new OptionsParser().parse(Arrays.stream(args).toList()),
+                    new Vector2d[]{new Vector2d(0, 0), new Vector2d(3, 4)});
             engine.run();*/
             Application.launch(App.class, args);
         }

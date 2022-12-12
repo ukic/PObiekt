@@ -2,7 +2,6 @@ package agh.ics.oop;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Vector;
 
 public abstract class AbstractWorldMap implements IWorldMap, IPositionChangeObserver {
     public Map<Vector2d, AbstractWorldElement> elements = new HashMap<>();
